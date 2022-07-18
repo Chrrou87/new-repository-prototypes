@@ -14,51 +14,85 @@
     <div class="govuk-grid-column-two-thirds">
 
       <h1 class="govuk-heading-xl">
-        No Chance!
+        Musical Quiz
       </h1>
 
-      <p>You are ineligible, boo hoo soz bye.</p>
+      <p>Test pass data page</p>
 
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-          <h1 class="govuk-fieldset__heading">
-            What is your address?
-          </h1>
-        </legend>
+<div class="govuk-form-group">
 
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="address-line-1">
-            Address line 1
-          </label>
-          <input class="govuk-input" id="address-line-1" name="address-line-1" type="text" autocomplete="address-line1">
-        </div>
+  <form action="/test-input-answers" method="post" class="form">
 
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="address-line-2">
-            Address line 2 (optional)
-          </label>
-          <input class="govuk-input" id="address-line-2" name="address-line-2" type="text" autocomplete="address-line2">
-        </div>
+  {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="address-town">
-            Town or city
-          </label>
-          <input class="govuk-input govuk-!-width-two-thirds" id="address-town" name="address-town" type="text" autocomplete="address-level2">
-        </div>
+{% call govukFieldset({
+  legend: {
+    text: "Who are your favourite music artists?",
+    classes: "govuk-fieldset__legend--l",
+    isPageHeading: true
+  }
+}) %}
 
-        <div class="govuk-form-group">
-          <label class="govuk-label" for="address-postcode">
-            Postcode
-          </label>
-          <input class="govuk-input govuk-input--width-10" id="address-postcode" name="address-postcode" type="text" autocomplete="postal-code">
-        </div>
+  {{ govukInput({
+    label: {
+      text: 'Artist 1'
+    },
+    id: "artist-1",
+    name: "artist-1",
+    autocomplete: "artist-1",
+    value: data['artist-1']
+  }) }}
 
-      </fieldset>
+  {{ govukInput({
+    label: {
+      text: 'Artist 2 (optional)'
+    },
+    id: "artist-2",
+    name: "artist-2",
+    autocomplete: "artist-2",
+    value: data['artist-2']
+  }) }}
 
-      <p>Read more <a href="/url/of/onward/page">about this topic</a>.</p>
+  {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{{ govukRadios({
+  idPrefix: "what-instrument-is-best",
+  name: "what-instrument-is-best",
+  fieldset: {
+    legend: {
+      text: "What instrument is best?",
+      isPageHeading: true,
+      classes: "govuk-fieldset__legend--l"
+    }
+  },
+  items: [
+    {
+      value: "guitar",
+      text: "Guitar",
+      checked: checked("what-instrument-is-best", "guitar")
+    },
+    {
+      value: "drums",
+      text: "Drums",
+      checked: checked("what-instrument-is-best", "drums")
+    },
+    {
+      value: "sax",
+      text: "Sax",
+      checked: checked("what-instrument-is-best", "sax")
+    }
+  ]
+}) }}
+
+{% endcall %}
+</div>
+
+
+<button class="govuk-button" data-module="govuk-button">Continue</button>
 
     </div>
+
   </div>
 
 {% endblock %}
